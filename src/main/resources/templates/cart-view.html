@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html th:replace="layout/mainLayout :: layout(~{::main})" xmlns:th="http://www.thymeleaf.org">
+<body>
+<main role="main">
+    <div class="container mt-3">
+        <div class="row">
+            <p>Your Shopping Cart contains <span th:text="${cartSize}"></span> items</p>
+            <div class="col-md-12 d-flex justify-content-evenly mt-2">
+                <a th:href="@{/view-cart/clear}" class="btn btn-outline-danger fw-bold btn-sm">Clear Cart</a>
+                <a th:href="@{'/products?cid=1'}" class="btn btn-outline-secondary fw-bold btn-sm">Continue Shopping</a>
+                <a th:href="@{/checkOut/view}" class="btn btn-outline-success fw-bold btn-sm">Proceed To CheckOut <i class="bi bi-arrow-right-circle"></i></a>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div th:if="${!getCartItems.isEmpty()}" class="col-md-10 offset-1 rounded-3" style="background-color: #E6F4F1">
+                <p class="text-end text-muted mt-3 fw-bolder">SubTotal : $ <span th:utext="${#numbers.formatDecimal(totalPrice,0,2)}"></span> </p>
+                <form th:action="@{/saveEditQuantity}" th:object="${CartItems}" method="post">
+                    <table class="table mt-3">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="item : ${getCartItems}">
+                                <td><img src="../static/images/products" th:src="@{'/images/products/'+ ${item.name} + '.png' }" alt=""></td>
+                                <td th:text="${item.name}" style="padding-top: 35px"></td>
+                                <td th:text=" '$'+${item.price} " style="padding-top: 35px"></td>
+                                <!--                        <td> <input type="number" th:field="${item.quantity}" min="1" class="form-control w-25"/></td>-->
+                                <td th:if="${!item.render}" th:text="${item.quantity}"  style="padding-top: 35px"></td>
+                                <td th:if="${item.render}"  style="padding-top: 30px">
+                                    <div class="" style="width: 70px">
+                                        <input type="number" min="1" th:field="*{quanLinkedList}"  class="form-control">
+                                    </div>
+                                </td>
+                                <td style="padding-top: 30px">
+                                    <a th:if="${!changeButton}" th:href="@{/clickEditButton}"  class="btn btn-sm btn-outline-secondary me-3"><i class="bi bi-pencil-square"></i></a>
+                                    <button th:if="${changeButton}" type="submit" class="btn btn-sm btn-outline-secondary me-3"><i class="bi bi-box-arrow-down"></i></button>
+                                    <a th:href="@{'/view-cart/remove?id='+${item.id}}"><i class="bi bi-trash btn btn-sm btn-outline-danger"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+
+            <div th:if="${getCartItems.isEmpty()}" class="col-md-10 offset-1 rounded-3 alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>No Item Purchase!</strong>
+            </div>
+
+        </div>
+    </div>
+</main>
+</body>
+</html>

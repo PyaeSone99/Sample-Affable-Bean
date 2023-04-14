@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html th:replace="layout/mainLayout :: layout(~{::main})" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<main role="main">
+  <div class="container">
+    <div class="row">
+      <div class="rounded p-2 mt-2 mb-3 shadow-lg" style="background-color: #E6F4F1">
+          <h5 class="fw-bold mb-3">Your Order has successfully processed and will be delivered within 24 hours</h5>
+          <p class="mb-1">Please keep a note of your confirmation number : 32553323</p>
+          <p class="mb-3">If you have a query concerning your order, feel free to <a href="#" class="text-primary text-decoration-underline">Contact us</a></p>
+          <p>Thank You for shopping at the Affable Bean Green Grocer!</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-7 p-3">
+        <div class="card shadow-lg" style="width: 35rem;background-color: #F5E6CB">
+          <div class="card-header fw-bold">
+            Order Summary
+          </div>
+          <div class="card-body">
+            <table class="table table-borderless">
+              <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+              </tr>
+              <tr th:each="item : ${cartItems}">
+                <td th:text="${item.name}"></td>
+                <td th:text="'$' + ${item.price}"></td>
+                <td th:text="${item.quantity}"></td>
+              </tr>
+              <tr class="table-group-divider">
+                <td></td>
+                <td>Delivery Surcharge</td>
+                <td>$2</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>Total Item Price</td>
+                <td th:text="'$' + ${totalPrice}"></td>
+              </tr>
+              <tr class="table-group-divider">
+                <td th:text="${confirmPurchase.localDate}"></td>
+                <td>Total</td>
+                <td th:text="'$'+ ${allTotal}"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5 p-3">
+        <div class="shadow-lg p-3 rounded mt-5" style="background-color: #F5E6CB">
+          <p class="fs-6 fw-bold">Delivery Address</p>
+          <table class="table table-borderless table-sm">
+            <tr>
+              <td th:text="${confirmPurchase.name}"></td>
+            </tr>
+            <tr>
+              <td th:text="${confirmPurchase.address}"></td>
+            </tr>
+            <tr class="table-group-divider">
+              <td><span class="fw-bold">Email : </span><span th:text="${confirmPurchase.email}"></span></td>
+            </tr>
+            <tr>
+              <td><span class="fw-bold">Phone : </span><span th:text="${confirmPurchase.phone}"></span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

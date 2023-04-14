@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html th:replace="layout/mainLayout :: layout(~{::main})"  xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<main role="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 pt-4">
+                <div class="text-center m-5 d-grid gap-2 col-5 mx-auto">
+                    <a th:href="@{'/products?cid=1'}" class="btn btn-outline-secondary">Dairy</a>
+                </div>
+                <div class="text-center m-5 d-grid gap-2 col-5 mx-auto">
+                    <a th:href="@{'/products?cid=2'}" class="btn btn-outline-secondary">Meat</a>
+                </div>
+                <div class="text-center m-5 d-grid gap-2 col-5 mx-auto">
+                    <a th:href="@{'/products?cid=3'}" class="btn btn-outline-secondary">Bakery</a>
+                </div>
+                <div class="text-center m-5 d-grid gap-2 col-5 mx-auto">
+                    <a th:href="@{'/products?cid=4'}" class="btn btn-outline-secondary">Fruits and Vagetables</a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-hover table-borderless">
+                    <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>
+                            <a th:href="@{/view-cart}" type="button" class="btn btn-sm position-relative float-end me-3" style="background-color: #7389F4">
+                                <i class="bi bi-bag" style="color: lavender"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" th:text="${cartSize}">
+                                    <span class="visually-hidden">unread messages</span>
+                                </span>
+                            </a>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody  >
+                    <tr th:each="pro : ${products}">
+                        <td><img src="../static/images/products" th:src="@{'/images/products/'+ ${pro.name} + '.png' }" alt=""> </td>
+                        <td th:text="${pro.name}" style="padding-top: 35px"></td>
+                        <td th:text="${pro.price}+'$'" style="padding-top: 35px"></td>
+                        <td style="padding-top: 30px"><a class="btn btn-sm btn-outline-secondary" th:href="@{'/cart/add-cart?id='+${pro.id}}">Purchase</a> </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <a th:href="@{/}" class="btn btn-outline-secondary "><i class="bi bi-arrow-left-circle"></i></a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
